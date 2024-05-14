@@ -1,0 +1,2115 @@
+asect 0
+main: ext               # Declare labels
+default_handler: ext    # as external
+
+# Interrupt vector table (IVT)
+# Place a vector to program start and
+# map all internal exceptions to default_handler
+dc main, 0              # Startup/Reset vector
+dc default_handler, 0   # Unaligned SP
+dc default_handler, 0   # Unaligned PC
+dc default_handler, 0   # Invalid instruction
+dc default_handler, 0   # Double fault
+align 0x80              # Reserve space for the rest 
+                        # of IVT
+
+# Exception handlers section
+rsect exc_handlers
+
+# This handler halts processor
+default_handler>
+    halt
+
+# Main program section
+rsect main
+
+# 0000_000000_000000
+
+first: ds 2
+
+second: ds 2
+
+third: ds 2
+
+fourth: ds 2
+
+player: ds 2
+
+map: ds 400
+
+
+proceed_ghost:
+    save r0
+    save r1
+    save r2
+    save r4
+
+    ld r3, r4
+    ldi r5, 1
+
+    ldi r0, 0b0000000000111111 # mask
+    
+    move r0, r1 # x
+    and r4, r1
+    
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+    
+    move r0, r2 # y
+    and r4, r2 
+    
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+    shr r4
+
+    # r4 have move to
+
+    # operations with position
+        inc r1
+        inc r2
+    # end of operations
+    
+    and r0, r1
+    and r0, r2
+
+    shl r2
+    shl r2
+    shl r2
+    shl r2
+    shl r2
+    shl r2
+
+    rol r4
+    rol r4
+    rol r4
+    rol r4
+
+    or r2, r4
+    or r1, r4
+
+    st r3, r4
+    
+    ldi r5, 0
+    ldi r5, 1
+
+    restore
+    restore
+    restore
+    restore
+    rts
+
+load_map:
+    ldi r0, map+0
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+1
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+2
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+3
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+4
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+5
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+6
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+7
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+8
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+9
+    ldi r1, 0x15
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+10
+    ldi r1, 0x15
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+11
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+12
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+13
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+14
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+15
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+16
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+17
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+18
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+19
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+20
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+21
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+22
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+23
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+24
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+25
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+26
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+27
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+28
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+29
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+30
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+31
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+32
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+33
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+34
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+35
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+36
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+37
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+38
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+39
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+40
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+41
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+42
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+43
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+44
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+45
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+46
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+47
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+48
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+49
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+50
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+51
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+52
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+53
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+54
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+55
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+56
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+57
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+58
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+59
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+60
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+61
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+62
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+63
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+64
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+65
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+66
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+67
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+68
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+69
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+70
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+71
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+72
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+73
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+74
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+75
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+76
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+77
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+78
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+79
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+80
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+81
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+82
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+83
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+84
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+85
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+86
+    ldi r1, 0x0f
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+87
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+88
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+89
+    ldi r1, 0x15
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+90
+    ldi r1, 0x15
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+91
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+92
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+93
+    ldi r1, 0x0f
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+94
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+95
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+96
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+97
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+98
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+99
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+100
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+101
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+102
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+103
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+104
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+105
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+106
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+107
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+108
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+109
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+110
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+111
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+112
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+113
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+114
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+115
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+116
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+117
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+118
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+119
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+120
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+121
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+122
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+123
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+124
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+125
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+126
+    ldi r1, 0x12
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+127
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+128
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+129
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+130
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+131
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+132
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+133
+    ldi r1, 0x14
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+134
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+135
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+136
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+137
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+138
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+139
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+140
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+141
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+142
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+143
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+144
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+145
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+146
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+147
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+148
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+149
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+150
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+151
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+152
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+153
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+154
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+155
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+156
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+157
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+158
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+159
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+160
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+161
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+162
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+163
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+164
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+165
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+166
+    ldi r1, 0x0e
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+167
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+168
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+169
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+170
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+171
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+172
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+173
+    ldi r1, 0x0e
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+174
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+175
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+176
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+177
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+178
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+179
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+180
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+181
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+182
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+183
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+184
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+185
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+186
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+187
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+188
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+189
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+190
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+191
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+192
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+193
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+194
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+195
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+196
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+197
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+198
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+199
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+200
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+201
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+202
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+203
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+204
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+205
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+206
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+207
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+208
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+209
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+210
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+211
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+212
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+213
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+214
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+215
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+216
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+217
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+218
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+219
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+220
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+221
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+222
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+223
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+224
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+225
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+226
+    ldi r1, 0x0f
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+227
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+228
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+229
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+230
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+231
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+232
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+233
+    ldi r1, 0x0f
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+234
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+235
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+236
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+237
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+238
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+239
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+240
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+241
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+242
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+243
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+244
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+245
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+246
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+247
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+248
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+249
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+250
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+251
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+252
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+253
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+254
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+255
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+256
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+257
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+258
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+259
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+260
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+261
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+262
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+263
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+264
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+265
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+266
+    ldi r1, 0x12
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+267
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+268
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+269
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+270
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+271
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+272
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+273
+    ldi r1, 0x14
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+274
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+275
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+276
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+277
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+278
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+279
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+280
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+281
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+282
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+283
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+284
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+285
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+286
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+287
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+288
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+289
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+290
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+291
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+292
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+293
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+294
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+295
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+296
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+297
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+298
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+299
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+300
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+301
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+302
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+303
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+304
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+305
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+306
+    ldi r1, 0x0e
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+307
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+308
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+309
+    ldi r1, 0x13
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+310
+    ldi r1, 0x13
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+311
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+312
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+313
+    ldi r1, 0x0e
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+314
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+315
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+316
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+317
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+318
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+319
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+320
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+321
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+322
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+323
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+324
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+325
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+326
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+327
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+328
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+329
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+330
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+331
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+332
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+333
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+334
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+335
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+336
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+337
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+338
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+339
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+340
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+341
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+342
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+343
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+344
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+345
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+346
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+347
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+348
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+349
+    ldi r1, 0x0c
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+350
+    ldi r1, 0x0b
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+351
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+352
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+353
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+354
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+355
+    ldi r1, 0x11
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+356
+    ldi r1, 0x10
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+357
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+358
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+359
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+360
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+361
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+362
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+363
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+364
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+365
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+366
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+367
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+368
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+369
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+370
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+371
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+372
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+373
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+374
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+375
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+376
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+377
+    ldi r1, 0x07
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+378
+    ldi r1, 0x09
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+379
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+380
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+381
+    ldi r1, 0x0d
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+382
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+383
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+384
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+385
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+386
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+387
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+388
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+389
+    ldi r1, 0x13
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+390
+    ldi r1, 0x13
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+391
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+392
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+393
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+394
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+395
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+396
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+397
+    ldi r1, 0x08
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+398
+    ldi r1, 0x0a
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    ldi r0, map+399
+    ldi r1, 0x17
+    st r0, r1
+ldi r5, 1
+ldi r5, 0
+    rts
+
+
+main>
+    jsr load_map 
+    halt
+end.

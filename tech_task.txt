@@ -1,0 +1,12 @@
+1. Create field for display
+	1.1. Vreate video chip for processing data to visible and playable game
+		1.1.1. Create row handler
+	1.2. Create output for 4 * 30x30 displays
+2. Create entities
+	2.1. Create and connect player
+		2.1.1. Create win/lose condition
+		2.1.2. Create point system
+	2.2. Create ghosts
+		2.2.1. Create all conditions for independent movement
+		2.2.2. Create ai for movement
+3. Wrap it up
